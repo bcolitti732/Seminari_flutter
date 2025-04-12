@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
-      body: SingleChildScrollView( // Permite el desplazamiento vertical
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
@@ -29,22 +29,22 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 children: [
                   ElevatedButton(
-                    onPressed: () => context.push('/details'),
+                    onPressed: () => context.push('/home/details'),
                     child: const Text('/details'),
                   ),
                   const SizedBox(width: 12),
                   ElevatedButton(
-                    onPressed: () => context.push('/details/imprimir'),
+                    onPressed: () => context.push('/home/details/imprimir'),
                     child: const Text('/details/imprimir'),
                   ),
                   const SizedBox(width: 12),
                   ElevatedButton(
-                    onPressed: () => context.push('/editar'),
+                    onPressed: () => context.push('/home/editar'),
                     child: const Text('/editar'),
                   ),
                   const SizedBox(width: 12),
                   ElevatedButton(
-                    onPressed: () => context.push('/borrar'),
+                    onPressed: () => context.push('/home/borrar'),
                     child: const Text('/borrar'),
                   ),
                 ],
@@ -55,22 +55,22 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 children: [
                   ElevatedButton(
-                    onPressed: () => context.go('/details'),
+                    onPressed: () => context.go('/home/details'),
                     child: const Text('/details'),
                   ),
                   const SizedBox(width: 12),
                   ElevatedButton(
-                    onPressed: () => context.go('/details/imprimir'),
+                    onPressed: () => context.go('/home/details/imprimir'),
                     child: const Text('/details/imprimir'),
                   ),
                   const SizedBox(width: 12),
                   ElevatedButton(
-                    onPressed: () => context.go('/editar'),
+                    onPressed: () => context.go('/home/editar'),
                     child: const Text('/editar'),
                   ),
                   const SizedBox(width: 12),
                   ElevatedButton(
-                    onPressed: () => context.go('/borrar'),
+                    onPressed: () => context.go('/home/borrar'),
                     child: const Text('/borrar'),
                   ),
                 ],
@@ -88,8 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 12),
               if (provider.users.isNotEmpty)
-                SizedBox( 
-                  height: 400, 
+                SizedBox(
+                  height: 400,
                   child: ListView.builder(
                     itemCount: provider.users.length,
                     itemBuilder: (context, index) {
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (provider.isLoading)
                 const Center(
                   child: CircularProgressIndicator(),
-              ),
+                ),
             ],
           ),
         ),
