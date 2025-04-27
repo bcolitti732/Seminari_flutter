@@ -7,6 +7,16 @@ class UserProvider with ChangeNotifier {
   bool _isLoading = false;
   String? _error;
 
+
+  User currentUser = User(
+    id: null,
+    name: '',
+    age: 0,
+    email: '',
+    password: '',
+  );
+
+
   List<User> get users => _users;
   bool get isLoading => _isLoading;
   String? get error => _error;
@@ -18,6 +28,12 @@ class UserProvider with ChangeNotifier {
 
   void _setError(String? errorMessage) {
     _error = errorMessage;
+    notifyListeners();
+  }
+
+  void setCurrentUser(User user) {
+    currentUser = user;
+    print('Usuario actualizado: ${currentUser.toJson()}');
     notifyListeners();
   }
 

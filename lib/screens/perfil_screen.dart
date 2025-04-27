@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:seminari_flutter/provider/users_provider.dart';
 import '../widgets/Layout.dart';
 import '../services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 class PerfilScreen extends StatelessWidget {
   const PerfilScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: true);
+    final currentUser = userProvider.currentUser;
+
     return LayoutWrapper(
       title: 'Perfil',
       child: SingleChildScrollView(
@@ -26,17 +31,18 @@ class PerfilScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Exemple',
+                    currentUser.name, // Muestra el nombre del usuario
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'demo@exemple.com',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleMedium?.copyWith(color: Colors.grey),
+                    currentUser.email, // Muestra el correo del usuario
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(color: Colors.grey),
                   ),
                   const SizedBox(height: 32),
                   Card(
@@ -52,47 +58,20 @@ class PerfilScreen extends StatelessWidget {
                             context,
                             Icons.badge,
                             'ID',
-                            '67f8f3103368468b6e9d509c',
+                            currentUser.id ?? 'No ID', // Muestra el ID del usuario
                           ),
                           const Divider(),
-                          _buildProfileItem(context, Icons.cake, 'Edat', '22'),
+                          _buildProfileItem(
+                            context,
+                            Icons.cake,
+                            'Edat',
+                            currentUser.age.toString(), // Muestra la edad del usuario
+                          ),
                         ],
                       ),
                     ),
                   ),
                   const SizedBox(height: 24),
-                  Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Configuració del compte',
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          const SizedBox(height: 16),
-                          _buildSettingItem(
-                            context,
-                            Icons.edit,
-                            'Editar Perfil',
-                            'Actualitza la teva informació personal',
-                          ),
-                          _buildSettingItem(
-                            context,
-                            Icons.lock,
-                            'Canviar contrasenya',
-                            'Actualitzar la contrasenya',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 32),
                   ElevatedButton.icon(
                     onPressed: () async {
                       try {
@@ -160,21 +139,6 @@ class PerfilScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildSettingItem(
-    BuildContext context,
-    IconData icon,
-    String title,
-    String subtitle,
-  ) {
-    return ListTile(
-      leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
-      title: Text(title),
-      subtitle: Text(subtitle),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: () {},
     );
   }
 }
