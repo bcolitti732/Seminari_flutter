@@ -12,7 +12,6 @@ class PerfilScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: true);
     final currentUser = userProvider.currentUser;
-
     return LayoutWrapper(
       title: 'Perfil',
       child: SingleChildScrollView(
@@ -31,14 +30,14 @@ class PerfilScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    currentUser.name, // Muestra el nombre del usuario
+                    currentUser.name,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    currentUser.email, // Muestra el correo del usuario
+                    currentUser.email,
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
@@ -58,20 +57,54 @@ class PerfilScreen extends StatelessWidget {
                             context,
                             Icons.badge,
                             'ID',
-                            currentUser.id ?? 'No ID', // Muestra el ID del usuario
+                            currentUser.id ?? 'No ID',
                           ),
                           const Divider(),
                           _buildProfileItem(
                             context,
                             Icons.cake,
                             'Edat',
-                            currentUser.age.toString(), // Muestra la edad del usuario
+                            currentUser.age.toString(),
                           ),
                         ],
                       ),
                     ),
                   ),
                   const SizedBox(height: 24),
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Configuració del compte',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 16),
+                          _buildSettingItem(
+                            context,
+                            Icons.edit,
+                            'Editar Perfil',
+                            'Actualitza la teva informació personal',
+                            onTap: () => context.go('/editar'),
+                          ),
+                          _buildSettingItem(
+                            context,
+                            Icons.lock,
+                            'Canviar contrasenya',
+                            'Actualitzar la contrasenya',
+                            onTap: () => context.go('/canviarcontrasenya'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 32),
                   ElevatedButton.icon(
                     onPressed: () async {
                       try {
@@ -139,6 +172,23 @@ class PerfilScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSettingItem(
+    BuildContext context,
+    IconData icon,
+    String title,
+    String subtitle, {
+    VoidCallback? onTap,  
+    }
+  ) {
+    return ListTile(
+      leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
+      title: Text(title),
+      subtitle: Text(subtitle),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+      onTap: onTap,
     );
   }
 }
